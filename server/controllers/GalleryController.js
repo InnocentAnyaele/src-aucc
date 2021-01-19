@@ -4,7 +4,8 @@ const addGallery = (req, res, next) => {
     const title = req.body.title
     const file = req.files.file
     const filename = Date.now() + file.name
-    file.mv(`${__dirname}../../../client/src/assets/gallery/${filename}`,err => {
+
+    file.mv(`${__dirname}../../../uploads/${filename}`, err => {
         if(err) {
             console.error(err)
             return res.status(500).send(err)
@@ -21,6 +22,24 @@ const addGallery = (req, res, next) => {
             res.status(400).send(err)
             })
     })
+
+    // file.mv(`${__dirname}../../../client/src/assets/gallery/${filename}`,err => {
+    //     if(err) {
+    //         console.error(err)
+    //         return res.status(500).send(err)
+    //     }
+    //     let gallery = new Gallery({
+    //         title: title, 
+    //         file: filename
+    //     })
+    //     gallery.save()
+    //     .then(()=>{
+    //          res.json({message: 'file uploaded!'})
+    //         })
+    //     .catch((err)=> {
+    //         res.status(400).send(err)
+    //         })
+    // })
 }
 
 const getGallery = (req, res, next) => {
@@ -46,10 +65,14 @@ Gallery.findOneAndDelete({_id: req.params.id}, function(err, result){
 })
 
 const fs = require('fs')
-fs.unlink(`${__dirname}../../../client/src/assets/gallery/${req.params.file}`, (err) => {
+fs.unlink(`${__dirname}../../../uploads/${req.params.file}`, (err) => {
     if (err) throw err
-    // console.log('Successful')
 })
+
+// fs.unlink(`${__dirname}../../../client/src/assets/gallery/${req.params.file}`, (err) => {
+//     if (err) throw err
+//     // console.log('Successful')
+// })
 
 }
 
