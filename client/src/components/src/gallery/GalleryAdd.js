@@ -8,6 +8,7 @@ import {Form, Button, ProgressBar} from 'react-bootstrap'
 import { Modal, ModalBody, ModalHeader, ModalFooter} from 'reactstrap'
 import AddIcon from '@material-ui/icons/Add'
 import axios from 'axios'
+import {storage} from '../../../firebase/firebase'
 
 
 // Modal.setAppElement('#root')
@@ -22,7 +23,8 @@ class GalleryAdd extends Component {
        file: '',
        fileName: 'Choose File',
        message: '',
-       uploadPercentage: '0'
+       uploadPercentage: '0',
+       progress: ''
     }
   }
 
@@ -32,44 +34,62 @@ class GalleryAdd extends Component {
 
  changeFileHandler = e => {
   this.setState({file: e.target.files[0]})
-  this.setState({fileName: e.target.files[0].name})
+  this.setState({fileName: Date.now() + e.target.files[0].name})
  }
   
   submitHandler = async e => {
     e.preventDefault()
-    const formData = new FormData()
+    let formData = new FormData()
     formData.append('title', this.state.title)
     formData.append('file', this.state.file)
-
-    console.log(this.state.file.type)
+    formData.append('fileName', this.state.fileName)
 
     if (this.state.file.type.split('/')[0] === 'image'){
-      try {
-        const res = await axios.post('/gallery/addGallery', formData, {
-          headers : {
-            'Content-Type' : 'multipart/form-data'
-          },
-          onUploadProgress: progressEvent => {
-            this.setState({uploadPercentage: (parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total)))})
+
+      const uploadTask = storage.ref(`/gallery/${this.state.fileName}`).put(this.state.file)
+      uploadTask.on('state_changed', 
+      (snapshot) => {
+        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+        // console.log(progress)
+        this.setState({progress: progress})
+        // console.log(snapshot)
+      },
+       (error) => {
+         console.log(error)
+       },
+        async (complete)=>{
+          try {
+            const url = await storage.ref('gallery').child(this.state.fileName).getDownloadURL()  
+            console.log(url)     
+            formData.append('url', url)
+            const res = await axios.post('/gallery/addGallery', formData, {
+              headers : {
+                'Content-Type' : 'multipart/form-data'
+              },
+              onUploadProgress: progressEvent => {
+                this.setState({uploadPercentage: (parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total)))})
+              }
+            } )
+            if(this.state.uploadPercentage === 100){
+              this.setState({message: 'File Uploaded!'})
+            }
+            console.log(this.state.uploadPercentage)
+            console.log(res.data)
+          } catch (err) {
+            if(err.response.status === 500) {
+              this.setState({message: 'There was a problem with the server!'})
+              // console.log(err)
+            } else if (err.response.status === 400){
+              this.setState({message: 'Could not upload, try again later'})
+            } 
+            else {
+              this.setState({message: err.response.data.msg})
+              // console.log(err.response.data.msg)
+            }
           }
-        } )
-        if(this.state.uploadPercentage === 100){
-          this.setState({message: 'File Uploaded!'})
-        }
-        console.log(this.state.uploadPercentage)
-        console.log(res.data)
-      } catch (err) {
-        if(err.response.status === 500) {
-          this.setState({message: 'There was a problem with the server!'})
-          // console.log(err)
-        } else if (err.response.status === 400){
-          this.setState({message: 'Could not upload, try again later'})
-        } 
-        else {
-          this.setState({message: err.response.data.msg})
-          // console.log(err.response.data.msg)
-        }
-      }
+        })
+
+      
     }
       else {
         this.setState({message: 'Please select an image'})
@@ -122,7 +142,8 @@ class GalleryAdd extends Component {
   <p style={{color: 'red'}}><i>{this.state.message}</i></p>
 
   <div className='mb-3'>
-  <ProgressBar striped variant="success" now={this.state.uploadPercentage} label={`${this.state.uploadPercentage}%`} />
+  <ProgressBar striped variant="success" now={this.state.progress} label={`${this.state.progress}%`} /> <br></br>
+  {/* <ProgressBar striped variant="success" now={this.state.uploadPercentage} label={`${this.state.uploadPercentage}%`} /> */}
   </div>
 
   <Button variant='primary' type='submit'>Add</Button>

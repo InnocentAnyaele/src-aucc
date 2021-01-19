@@ -3,26 +3,46 @@ const Gallery = require('../models/Gallery')
 const addGallery = (req, res, next) => {
     const title = req.body.title
     const file = req.files.file
-    const filename = Date.now() + file.name
+    // const filename = Date.now() + file.name
+    const filename = req.body.fileName
+    const url = req.body.url
 
-    file.mv(`${__dirname}../../../client/src/assets/gallery/${filename}`,err => {
-        if(err) {
-            console.error(err)
-            return res.status(500).send(err)
-        }
-        let gallery = new Gallery({
-            title: title, 
-            file: filename
-        })
-        gallery.save()
-        .then(()=>{
-             res.json({message: 'file uploaded!'})
-            })
-        .catch((err)=> {
-            res.status(400).send(err)
-            })
+    let gallery = new Gallery({
+        title: title, 
+        file: filename,
+        url: url
     })
+    
+    gallery.save()
+    .then(()=>{
+         res.json({message: 'file uploaded!'})
+        })
+    .catch((err)=> {
+        res.status(400).send(err)
+        })
+       
+    // file.mv(`${__dirname}../../../client/src/assets/gallery/${filename}`,err => {
+    //     if(err) {
+    //         console.error(err)
+    //         return res.status(500).send(err)
+    //     }
+    //     let gallery = new Gallery({
+    //         title: title, 
+    //         file: filename,
+    //         url: url
+    //     })
+        
+    //     gallery.save()
+    //     .then(()=>{
+    //          res.json({message: 'file uploaded!'})
+    //         })
+    //     .catch((err)=> {
+    //         res.status(400).send(err)
+    //         })
+    // })
+
 }
+
 
 const getGallery = (req, res, next) => {
     Gallery.find().sort( { createdAt: -1 } )
@@ -48,10 +68,10 @@ Gallery.findOneAndDelete({_id: req.params.id}, function(err, result){
 
 const fs = require('fs')
 
-fs.unlink(`${__dirname}../../../client/src/assets/gallery/${req.params.file}`, (err) => {
-    if (err) throw err
-    // console.log('Successful')
-})
+// fs.unlink(`${__dirname}../../../client/src/assets/gallery/${req.params.file}`, (err) => {
+//     if (err) throw err
+//     // console.log('Successful')
+// })
 
 }
 

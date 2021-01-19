@@ -9,6 +9,10 @@ const gallerySchema = new Schema({
     file: {
         type: String,
         required: true
+    },
+    url : {
+        type: String,
+        required: true
     }
 }, {timestamps: true})
 

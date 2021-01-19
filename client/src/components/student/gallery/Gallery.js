@@ -37,7 +37,7 @@ const Gallery = () => {
           </div>
               :
               items.map(item => (
-              <Images key={item._id} image={item.file} title={item.title} loading={loading} id={item._id} />
+              <Images key={item._id} image={item.file} url={item.url} title={item.title} loading={loading} id={item._id} />
               ))
           }
           </Row>
