@@ -8,9 +8,9 @@ const newsSchema = new Schema({
     name: {
         type: String
     },
-    file: {
-        type: String
-    },
+    // file: {
+    //     type: String
+    // },
     link: {
         type: String
     },

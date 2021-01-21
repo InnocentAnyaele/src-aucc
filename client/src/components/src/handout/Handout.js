@@ -55,7 +55,7 @@ const Handout = () => {
           </div>
               :
             items.map(item => (
-        <HandoutContent key={item._id} date={item.createdAt} id={item._id} title={item.title} file={item.file}  />
+        <HandoutContent key={item._id} date={item.createdAt} url={item.url} id={item._id} title={item.title} file={item.file}  />
         ))}
         </Row>
         </Container>

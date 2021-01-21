@@ -25,6 +25,9 @@ const ecommerceSchema = new Schema({
     },
     type: {
         type: String
+    },
+    url: {
+        type: String
     }
 }, {timestamps: true})
 

@@ -18,7 +18,7 @@ class AddVoter extends Component {
   
     this.state = {
        id: '',
-       name: '',
+       password: '',
        message: '',
     }
   }
@@ -30,9 +30,9 @@ class AddVoter extends Component {
    submitHandler = async e => {
     e.preventDefault()
     try {
-      const res = await axios.post('/voter/addVoter', {name: this.state.name, id: this.state.id} )
+      const res = await axios.post('/voter/addVoter', {password: this.state.password, id: this.state.id} )
       if(res.status === 200){
-        this.setState({message: 'Voter Added!'})
+        this.setState({message: 'Student Added!'})
       }
     } catch (err) {
       if(err.response.status === 404) {
@@ -69,24 +69,24 @@ class AddVoter extends Component {
         return (
             <div>
  <button className='btn btn-primary m-3' onClick={this.openModal}>
-<AddIcon/> Add a voter
+<AddIcon/> Add a student
          </button>
 
           <Modal isOpen={this.state.isOpen} onRequestHide={this.hideModal} onRequestClose={this.hideModal}>
               <ModalHeader>
                 {/* <ModalClose onClick={this.hideModal}/> */}
-               Add a voter
+               Add a student
               </ModalHeader>
               <ModalBody>
                 {/* <hr/> */}
                 <Form onSubmit={this.submitHandler}>
                 <Form.Group controlId="formBasicTitle">
     {/* <Form.Label>Seminar Title</Form.Label> */}
-    <Form.Control type="text" placeholder="Voter id" name='id' value={this.state.id} onChange={this.changeHandler} required/>
+    <Form.Control type="text" placeholder="Student id" name='id' value={this.state.id} onChange={this.changeHandler} required/>
   </Form.Group>
   <Form.Group controlId="formBasicTitle">
     {/* <Form.Label>Seminar Title</Form.Label> */}
-    <Form.Control type="text" name='name' value={this.state.name} onChange={this.changeHandler}  placeholder="Voter name" required/>
+    <Form.Control type="password" name='password' value={this.state.password} onChange={this.changeHandler}  placeholder="Student password" required/>
   </Form.Group>
   <p style={{color: 'red'}}><i>{this.state.message}</i></p>
   <Button variant='primary' type='submit'>Add</Button>

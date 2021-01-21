@@ -37,7 +37,7 @@ const News = () => {
           </div>
               :
             items.map(item => (
-                <NewsContent key={item._id} id={item._id} date={item.createdAt} file={item.file} link={item.link} news={item.news} name={item.name} title={item.title} />
+                <NewsContent key={item._id} id={item._id} date={item.createdAt} link={item.link} news={item.news} name={item.name} title={item.title} />
             ))
             }
                 </Row>

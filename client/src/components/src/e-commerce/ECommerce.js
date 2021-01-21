@@ -85,7 +85,7 @@ const ECommerce = () => {
           </div>
               :
             items.map(item => (
-        <ECommerceContent key={item._id} id={item._id} name={item.name} title={item.title} price={item.price} email={item.email} phone={item.phone} type={item.type} info={item.info} date={item.createdAt} file={item.file} />
+        <ECommerceContent key={item._id} id={item._id} url={item.url} name={item.name} title={item.title} price={item.price} email={item.email} phone={item.phone} type={item.type} info={item.info} date={item.createdAt} file={item.file} />
             ))}
         </Row>
         </Container>

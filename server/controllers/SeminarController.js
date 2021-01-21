@@ -3,24 +3,44 @@ const Seminar = require('../models/Seminar')
 const addSeminar = (req, res, next) => {
     const title = req.body.title
     const file = req.files.file
-    const filename = Date.now() + file.name
-    file.mv(`${__dirname}../../../client/src/assets/seminar/${filename}`, err => {
-        if(err) {
-            console.error(err)
-            return res.status(500).send(err)
-        }
-        let seminar = new Seminar({
-            title: title,
-            file: filename
-        })
-        seminar.save()
-        .then(()=>{
-            res.json({message: 'file saved'})
-        })
-        .catch((err)=> {
-            res.status(400).send(err)
-        })
+    // const filename = Date.now() + file.name
+    const filename = req.body.fileName
+    const url = req.body.url
+
+    // console.log(title)
+    // console.log(filename)
+    // console.log(url)
+
+    let seminar = new Seminar({
+        title: title,
+        file: filename,
+        url: url
     })
+    seminar.save()
+    .then(()=>{
+        res.json({message: 'file saved'})
+    })
+    .catch((err)=> {
+        res.status(400).send(err)
+    })
+
+    // file.mv(`${__dirname}../../../client/src/assets/seminar/${filename}`, err => {
+    //     if(err) {
+    //         console.error(err)
+    //         return res.status(500).send(err)
+    //     }
+    //     let seminar = new Seminar({
+    //         title: title,
+    //         file: filename
+    //     })
+    //     seminar.save()
+    //     .then(()=>{
+    //         res.json({message: 'file saved'})
+    //     })
+    //     .catch((err)=> {
+    //         res.status(400).send(err)
+    //     })
+    // })
 }
 
 const getSeminar = (req, res, next) => {
@@ -43,11 +63,11 @@ const deleteSeminar = (req, res, next) => {
         }
     })
 
-    const fs = require('fs')
-    fs.unlink(`${__dirname}../../../client/src/assets/seminar/${req.params.file}`, (err) => {
-        if (err) throw err
-        // console.log('Successful')
-    })
+    // const fs = require('fs')
+    // fs.unlink(`${__dirname}../../../client/src/assets/seminar/${req.params.file}`, (err) => {
+    //     if (err) throw err
+    //     // console.log('Successful')
+    // })
 }
 
 const searchSeminar = (req, res, next) => {

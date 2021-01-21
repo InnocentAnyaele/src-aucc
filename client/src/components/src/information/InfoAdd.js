@@ -20,8 +20,8 @@ class InfoAdd extends Component {
        title: '',
        name: '',
        info: '',
-       file: '',
-       fileName: 'Choose FIle',
+      //  file: '',
+      //  fileName: 'Choose FIle',
        message: '',
        uploadPercentage: '0'
     }
@@ -31,16 +31,16 @@ class InfoAdd extends Component {
     this.setState({[e.target.name]: e.target.value})
   }
 
-  changeFileHandler = e => {
-    this.setState({file: e.target.files[0]})
-    this.setState({fileName: e.target.files[0].name})
-   }
+  // changeFileHandler = e => {
+  //   this.setState({file: e.target.files[0]})
+  //   this.setState({fileName: e.target.files[0].name})
+  //  }
 
    submitHandler = async e => {
     e.preventDefault()
     const formData = new FormData()
     formData.append('title', this.state.title)
-    formData.append('file', this.state.file)
+    // formData.append('file', this.state.file)
     formData.append('name', this.state.name)
     formData.append('info', this.state.info)
     console.log(this.state.news)
@@ -74,17 +74,19 @@ class InfoAdd extends Component {
       }  
     }
 
-    if (this.state.file.length < 1) {
-      insert()
-    }
-    else {
-    if (this.state.file.type.split('/')[0] === 'image'){
-      insert()
-    }
-    else {
-      this.setState({message: 'Select an image'})
-    }
-    }
+    insert()
+
+    // if (this.state.file.length < 1) {
+    //   insert()
+    // }
+    // else {
+    // if (this.state.file.type.split('/')[0] === 'image'){
+    //   insert()
+    // }
+    // else {
+    //   this.setState({message: 'Select an image'})
+    // }
+    // }
          
    
   }
@@ -130,13 +132,13 @@ class InfoAdd extends Component {
     <Form.Control type="text" name='name'  onChange={this.changeHandler} value={this.state.name} placeholder="Name" required/>
   </Form.Group>
 
-  <Form.Group>
+  {/* <Form.Group>
   <Form.File id="exampleFormControlFile1" type='file' onChange={this.changeFileHandler} accept="image/*"/>
 
     <Form.Text className="text-muted">
       School logo recommended if you don't have any image.
     </Form.Text>
-  </Form.Group>
+  </Form.Group> */}
 
   <Form.Group controlId="exampleForm.ControlTextarea1">
     <Form.Control as="textarea" onChange={this.changeHandler} name='info' rows="3" placeholder='Information' value={this.state.info} on required/>

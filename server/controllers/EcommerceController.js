@@ -10,21 +10,23 @@ const addEcommerce = (req, res, next) => {
     const info = req.body.info
     const file = req.body.file
     const type = req.body.type
+    const filename = req.body.fileName
+    const url = req.body.url
 
-    if(req.files){
-        const file = req.files.file
-        // console.log(file)
-        var filename = Date.now() + file.name
-        file.mv(`${__dirname}../../../client/src/assets/ecommerce/${filename}`,err => {
-            if(err) {
-                console.error(err)
-                return res.status(500).send(err)
-            }
-})
-    }
-  else {
-    var filename = 'datalink.png'
-  }
+//     if(req.files){
+//         const file = req.files.file
+//         // console.log(file)
+//         var filename = Date.now() + file.name
+//         file.mv(`${__dirname}../../../client/src/assets/ecommerce/${filename}`,err => {
+//             if(err) {
+//                 console.error(err)
+//                 return res.status(500).send(err)
+//             }
+// })
+//     }
+//   else {
+//     var filename = 'datalink.png'
+//   }
 
         let data = new Ecommerce({
             title: title,
@@ -34,7 +36,8 @@ const addEcommerce = (req, res, next) => {
             type: type,
             phone: phone,
             price: price,
-            email: email
+            email: email,
+            url: url
         })
         data.save()
         .then(()=> {
@@ -68,13 +71,13 @@ const deleteEcommerce = (req, res, next) => {
         }
     })
 
-    if (req.params.file !== 'datalink.png'){
-        const fs = require('fs')
-        fs.unlink(`${__dirname}../../../client/src/assets/ecommerce/${req.params.file}`, (err) => {
-            if (err) throw err
-            // console.log('Successful')
-        })
-    }
+    // if (req.params.file !== 'datalink.png'){
+    //     const fs = require('fs')
+    //     fs.unlink(`${__dirname}../../../client/src/assets/ecommerce/${req.params.file}`, (err) => {
+    //         if (err) throw err
+    //         // console.log('Successful')
+    //     })
+    // }
 }
 
 const searchEcommerce = (req, res, next) => {

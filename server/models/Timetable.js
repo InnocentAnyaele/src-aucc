@@ -7,6 +7,9 @@ const timetableSchema = new Schema({
     },
     file: {
         type: String
+    },
+    url: {
+        type: String
     }
 }, {timestamps: true})
 

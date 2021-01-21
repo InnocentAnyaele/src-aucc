@@ -45,7 +45,7 @@ class ECommerceReadModal extends Component {
               <ModalBody>
               
               <Card>
-                  <img className="modal-img" src={require(`../../../assets/ecommerce/${this.props.file}`)} alt="card"/>
+                  <img className="modal-img" src={this.props.url} alt="card"/>
               </Card>
 
                 <hr/>

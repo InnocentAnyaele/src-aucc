@@ -51,7 +51,7 @@ const Budget = () => {
           </div>
               :
             items.map(item => (
-        <BudgetContent key={items._id} date={item.createdAt} id={item._id} title={item.title} file={item.file} />
+        <BudgetContent key={items._id} date={item.createdAt} id={item._id} url={item.url} title={item.title} file={item.file} />
         ))}
         </Row>
         </Container>

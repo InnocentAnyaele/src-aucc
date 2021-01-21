@@ -2,6 +2,7 @@ import React from 'react'
 // import image from '../../../assets/img/file.png'
 import {Button, Col, Card, Row} from 'react-bootstrap'
 import axios from 'axios'
+import {storage} from '../../../firebase/firebase'
 
 const HandoutContent = (props) => {
 
@@ -9,7 +10,12 @@ const HandoutContent = (props) => {
     axios.delete(`/handout/deleteHandout/${props.id}&${props.file}`)
     // axios.delete(`/budget/deleteBudget/${props.id}`)
     .then(()=> { 
+      const deleteRef = storage.ref().child(`handout/${props.file}`)
+      deleteRef.delete().then(function() {
         window.location.reload(false)
+      }).catch(function(error) {
+        alert('Could not delete. Try again later!')
+      })
     })
     .catch(()=> {
         alert('Could not delete. Try again later!')
@@ -28,7 +34,7 @@ const HandoutContent = (props) => {
                 </div>
             </div>
 <Row className='mb-2' style={{margin: 'auto auto'}}>
-<a href={require(`../../../assets/handout/${props.file}`)} download={props.title}> <Button variant='outline-primary' className='mr-2' >  Download </Button> </a>
+<a href={props.url} download={props.title}> <Button variant='outline-primary' className='mr-2' >  Download </Button> </a>
 <Button variant='outline-danger' onClick={deleteHandler}>Delete</Button>
 </Row>
             </Card>

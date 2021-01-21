@@ -3,29 +3,45 @@ const Timetable = require('../models/Timetable')
 const addTimetable = (req, res, next) => {
     const title = req.body.title
     const file = req.files.file
-    const filename = Date.now() + file.name
+    // const filename = Date.now() + file.name
+    const filename = req.body.fileName
+    const url = req.body.url
 
     // console.log(filename)
 
-    file.mv(`${__dirname}../../../client/src/assets/timetable/${filename}`, err => {
-        if (err) {
-            console.error(err)
-            return res.status(500).send(err)
-        }
-
-        let timetable = new Timetable({
-            title: title,
-            file: filename
-        })
-
-        timetable.save()
-        .then(()=> {
-            res.json({message: 'Timetable added successfully'})
-        })
-        .catch((err) => {
-            res.status(400).send(err)
-        })
+    let timetable = new Timetable({
+        title: title,
+        file: filename,
+        url: url
     })
+
+    timetable.save()
+    .then(()=> {
+        res.json({message: 'Timetable added successfully'})
+    })
+    .catch((err) => {
+        res.status(400).send(err)
+    })
+
+    // file.mv(`${__dirname}../../../client/src/assets/timetable/${filename}`, err => {
+    //     if (err) {
+    //         console.error(err)
+    //         return res.status(500).send(err)
+    //     }
+
+    //     let timetable = new Timetable({
+    //         title: title,
+    //         file: filename
+    //     })
+
+    //     timetable.save()
+    //     .then(()=> {
+    //         res.json({message: 'Timetable added successfully'})
+    //     })
+    //     .catch((err) => {
+    //         res.status(400).send(err)
+    //     })
+    // })
 }
 
 const getTimetable = (req, res, next) => {
@@ -48,11 +64,11 @@ const deleteTimetable = (req, res, next) => {
         }
     })
 
-        const fs = require('fs')
-        fs.unlink(`${__dirname}../../../client/src/assets/timetable/${req.params.file}`, (err) => {
-            if (err) throw err
-            // console.log('Successful')
-        })
+        // const fs = require('fs')
+        // fs.unlink(`${__dirname}../../../client/src/assets/timetable/${req.params.file}`, (err) => {
+        //     if (err) throw err
+        //     // console.log('Successful')
+        // })
 
 }
 

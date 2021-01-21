@@ -27,8 +27,8 @@ console.log(res.data)
             <Table striped>
   <thead style={{color: 'blue'}}>
     <tr>
-      <th>Voter ID</th>
-      <th>Name</th>
+      <th>Student ID</th>
+      {/* <th>Name</th> */}
       <th>Delete</th>
     </tr>
   </thead>
@@ -42,7 +42,7 @@ console.log(res.data)
     items.map(item => (
       <tr key={item._id}>
       <td>{item.id}</td>
-      <td>{item.name}</td>
+      {/* <td>{item.name}</td> */}
    <td><DeleteVoter key={item._id} id={item._id} /></td>
     </tr>
     ))

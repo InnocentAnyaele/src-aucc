@@ -33,16 +33,16 @@ class NewsAdd extends Component {
     this.setState({[e.target.name]: e.target.value})
   }
 
-  changeFileHandler = e => {
-    this.setState({file: e.target.files[0]})
-    this.setState({fileName: e.target.files[0].name})
-   }
+  // changeFileHandler = e => {
+  //   this.setState({file: e.target.files[0]})
+  //   this.setState({fileName: e.target.files[0].name})
+  //  }
     
    submitHandler = async e => {
     e.preventDefault()
     const formData = new FormData()
     formData.append('title', this.state.title)
-    formData.append('file', this.state.file)
+    // formData.append('file', this.state.file)
     formData.append('link', this.state.link)
     formData.append('name', this.state.name)
     formData.append('news', this.state.news)
@@ -77,17 +77,19 @@ const insert = async () => {
   }
 }
 
-if (this.state.file.length < 1) {
-  insert()
-}
-else {
-if (this.state.file.type.split('/')[0] === 'image'){
-  insert()
-}
-else {
-  this.setState({message: 'Select an image'})
-}
-}
+insert ()
+
+// if (this.state.file.length < 1) {
+//   insert()
+// }
+// else {
+// if (this.state.file.type.split('/')[0] === 'image'){
+//   insert()
+// }
+// else {
+//   this.setState({message: 'Select an image'})
+// }
+// }
      
 
   }
@@ -136,12 +138,12 @@ else {
     <Form.Control type="text" name='name'  onChange={this.changeHandler} value={this.state.name} placeholder="Name" required/>
   </Form.Group>
 
-  <Form.Group>
+  {/* <Form.Group>
   <Form.File id="exampleFormControlFile1" type='file' onChange={this.changeFileHandler} accept="image/*"/>
     <Form.Text className="text-muted">
       School logo recommended if you don't have any image.
     </Form.Text>
-  </Form.Group>
+  </Form.Group> */}
 
   <Form.Group controlId="form
   BasicTitle">

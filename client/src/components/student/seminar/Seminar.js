@@ -55,7 +55,7 @@ const Seminar = () => {
           </div>
               :
                 items.map(item => (
-                    <SeminarContent key={item._id} file={item.file} title={item.title} loading={loading} id={item._id}/>
+                    <SeminarContent key={item._id} file={item.file} url={item.url} title={item.title} loading={loading} id={item._id}/>
                 ))
         }
         </Row>

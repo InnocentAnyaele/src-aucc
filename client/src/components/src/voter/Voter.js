@@ -11,7 +11,7 @@ const Voter = () => {
        <div className="wrapper">
        <Container>
        <Row>
-       <h1 style={{fontSize: '60px'}} className='text-muted'>Voters</h1>
+       <h1 style={{fontSize: '60px'}} className='text-muted'>Student</h1>
            <AddVoter/>
        </Row>
               <hr/>

@@ -5,25 +5,25 @@ const addInfo = (req, res, next) => {
     const name = req.body.name
     const info = req.body.info
 
-    if (req.files){
-        const file = req.files.file
-        var filename = Date.now() + file.name
-        file.mv(`${__dirname}../../../client/src/assets/info/${filename}`, err => {
-            if (err) {
-                console.error(err)
-                return res.status(500).send(err)
-            }
-        })
-    }
-  else {
-      var filename = 'datalink.png'
-  }
+//     if (req.files){
+//         const file = req.files.file
+//         var filename = Date.now() + file.name
+//         file.mv(`${__dirname}../../../client/src/assets/info/${filename}`, err => {
+//             if (err) {
+//                 console.error(err)
+//                 return res.status(500).send(err)
+//             }
+//         })
+//     }
+//   else {
+//       var filename = 'datalink.png'
+//   }
 
     let data = new Info({
         title: title,
         name: name,
         info: info,
-        file: filename
+        // file: filename
     })
     data.save()
     .then(()=> {
@@ -54,13 +54,13 @@ const deleteInfo = (req, res, next) => {
             res.status(200).send()
         }
     })
-    if (req.params.file !== 'datalink.png'){
-        const fs = require('fs')
-        fs.unlink(`${__dirname}../../../client/src/assets/info/${req.params.file}`, (err) => {
-            if (err) throw err
-            console.log('Successful')
-        })
-    }
+    // if (req.params.file !== 'datalink.png'){
+    //     const fs = require('fs')
+    //     fs.unlink(`${__dirname}../../../client/src/assets/info/${req.params.file}`, (err) => {
+    //         if (err) throw err
+    //         console.log('Successful')
+    //     })
+    // }
 }
 
 const searchInfo = (req, res, next) => {

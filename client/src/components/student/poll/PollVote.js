@@ -15,6 +15,7 @@ class PollVote extends Component {
        message: '',
        name: '',
        option: '',
+       password: ''
     }
   }
 
@@ -47,13 +48,13 @@ optionHandler = e => {
 e.preventDefault()
 console.log(this.state.name, this.state.option)
 try {
-  const res = await axios.post(`/poll/addVote/${this.props.id}`, {name: this.state.name, option: this.state.option} )
+  const res = await axios.post(`/poll/addVote/${this.props.id}`, {name: this.state.name, option: this.state.option, password: this.state.password} )
   if(res.status === 200){
     this.setState({message: 'Voted!'})
   }
 } catch (err) {
   if(err.response.status === 404) {
-    this.setState({message: 'Voter does not exist'})
+    this.setState({message: 'Username or password is wrong'})
     // console.log(err)
   } else if (err.response.status === 500){
     this.setState({message: 'Server error'})
@@ -137,6 +138,9 @@ render(){
   </fieldset>
               <Form.Group controlId="formBasicId">
     <Form.Control type="text" name='name' value={this.state.name} onChange={this.changeHandler} placeholder="Student ID" required />
+  </Form.Group>
+  <Form.Group controlId="formBasicId">
+    <Form.Control type="password" name='password' value={this.state.password} onChange={this.changeHandler} placeholder="Password" required />
   </Form.Group>
   <p style={{color: 'red', fontWeight: 'bold'}}><i>{this.state.message}</i></p>
   <Button variant="primary" type="submit">

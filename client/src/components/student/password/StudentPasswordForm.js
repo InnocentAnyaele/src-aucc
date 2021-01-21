@@ -3,7 +3,8 @@ import {Form, Button, Row} from 'react-bootstrap'
 import axios from 'axios'
 
 
-const SrcPasswordForm = () => {
+
+const StudentPasswordForm = () => {
 
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
@@ -17,7 +18,7 @@ const SrcPasswordForm = () => {
     // }
     // else {
       try {
-        const res = await axios.patch('/src/changePassword', {newpassword: newPassword, name: name, password: password})
+        const res = await axios.patch('/student/changePassword', {newpassword: newPassword, name: name, password: password})
         if (res.status === 200) {
           setMessage('Password Changed')
         }
@@ -30,10 +31,10 @@ const SrcPasswordForm = () => {
     // }
     // console.log(password, confirmPassword)
   }
-  
+
     return (
-        <Form style={{width: '500px'}} className='mb-5' onSubmit={submitHandler}>
-        <h2>Src Password</h2>
+        <Form style={{width: '500px'}} onSubmit={submitHandler}>
+        <h2>Student Password</h2>
         <Form.Group controlId="formBasicPassword">
     {/* <Form.Label>Old password</Form.Label> */}
     <Form.Control type="name" placeholder="Username" value={name} name='name' onChange={e => setName(e.target.value)} required />
@@ -54,9 +55,8 @@ const SrcPasswordForm = () => {
   </Button>
 </Row>
 
-
 </Form>
     )
 }
 
-export default SrcPasswordForm
+export default StudentPasswordForm

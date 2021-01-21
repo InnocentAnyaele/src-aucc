@@ -2,6 +2,7 @@ import React,  {useState} from 'react'
 import {Form, Button, ProgressBar} from 'react-bootstrap'
 import './Application.css'
 import axios from 'axios'
+import {storage} from '../../../firebase/firebase'
 
 function ApplicationForm () {
 
@@ -15,8 +16,9 @@ function ApplicationForm () {
     const [reference, setReference] = useState('')
     const [message, setMessage] = useState('')
     const [file, setFile] = useState('')
-    // const [fileName, setFileName] = useState('')
-    const [uploadPercentage, setUploadPercentage] = useState(0)
+    const [fileName, setFileName] = useState('')
+    // const [uploadPercentage, setUploadPercentage] = useState(0)
+    const [progress, setProgress] = useState('')
 
     // const changeDepartmentHandler = e => {
     //     setDepartment(e.target.value)
@@ -30,7 +32,7 @@ function ApplicationForm () {
 
     const changeFileHandler = e => {
         setFile(e.target.files[0])
-        // setFileName(e.target.files[0].name)
+        setFileName(Date.now() + e.target.files[0].name)
     }
 
     const submitHandler = async (e) => {
@@ -44,36 +46,49 @@ function ApplicationForm () {
         formData.append('file', file)
         formData.append('contact', contact)
         formData.append('email', email)
+        formData.append('fileName', fileName)
 
         const insert = async () => {
-            try {
-                const res = await axios.post ('/application/addApplication', formData, {
-                    headers : {
-                        'Content-Type': 'multipart/form-data'
-                    },
-                    onUploadProgress: progressEvent => {
-                        setUploadPercentage(parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total)))
-                        console.log(parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total)))
-                        if ((parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total))) === 100){
-                            setMessage('Application submitted')
-                        }
-                    }
-                })
 
-                // if(uploadPercentage === 100) {
-                //     setMessage('Application submitted!')
-                // }
-                console.log(res.data)
-            } catch (err) {
-                if(err.response.status === 500) {
-                    setMessage('There was a problem with the server')
-                } else if (err.response.status === 400) {
-                    setMessage('Application failed, try again')
+            const uploadTask = storage.ref(`/application/${fileName}`).put(file)
+            uploadTask.on('state_changed',
+            (snapshot) => {
+                const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+                setProgress(progress)
+            }, (error) => {
+                console.log(error)
+            }, async (complete) => {
+                try {
+                    const url = await storage.ref('application').child(fileName).getDownloadURL()
+                    formData.append('url', url)
+                    const res = await axios.post ('/application/addApplication', formData, {
+                        headers : {
+                            'Content-Type': 'multipart/form-data'
+                        },
+                        onUploadProgress: progressEvent => {
+                            // setUploadPercentage(parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total)))
+                            // console.log(parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total)))
+                            if ((parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total))) === 100){
+                                setMessage('Application submitted')
+                            }
+                        }
+                    })
+    
+                    // if(uploadPercentage === 100) {
+                    //     setMessage('Application submitted!')
+                    // }
+                    console.log(res.data)
+                } catch (err) {
+                    if(err.response.status === 500) {
+                        setMessage('There was a problem with the server')
+                    } else if (err.response.status === 400) {
+                        setMessage('Application failed, try again')
+                    }
+                    else {
+                        setMessage(err.response.data.msg)
+                    }
                 }
-                else {
-                    setMessage(err.response.data.msg)
-                }
-            }
+            })
         }
 
         if (file.length < 1) {
@@ -122,6 +137,7 @@ function ApplicationForm () {
                     <Form.Label>Department</Form.Label>
                     {/* <Form.Control value={department} name="department" onChange={changeDepartmentHandler} as="select" custom> */}
                     <Form.Control value={department} name="department" onChange={e => setDepartment(e.target.value)} as="select" custom>
+                        <option value=''></option>
                         <option value='Information Technology'>Information Technology</option>
                         <option value="Computer Science">Computer Science</option>
                         <option value="Business">Business</option>
@@ -132,6 +148,7 @@ function ApplicationForm () {
                     <Form.Label>Position</Form.Label>
                     {/* <Form.Control value={position} name="position" onChange={changePositionHandler} as="select" custom> */}
                     <Form.Control value={position} name="position" onChange={e => setPosition(e.target.value)} as="select" custom>
+                        <option value=''></option>
                         <option value='SRC president'>SRC president</option>
                         <option value="SRC vice president">SRC Vice President</option>
                         <option value="Vice Commissioner">Vice Commisioner</option>
@@ -146,7 +163,7 @@ function ApplicationForm () {
                 <p style={{color: 'red'}} ><i>{message}</i></p>
 
                 <div className='mb-3'>
-                    <ProgressBar striped variant="success" now={uploadPercentage} label={`${uploadPercentage}%`} />
+                    <ProgressBar striped variant="success" now={progress} label={`${progress}%`} />
                 </div>
 
                 <Button variant="primary" type="submit">Submit</Button>

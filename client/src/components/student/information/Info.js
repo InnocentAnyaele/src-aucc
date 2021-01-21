@@ -50,7 +50,7 @@ const Info = () => {
           </div>
               :
             items.map(item => (
-            <InfoContent key={item._id} id={item._id} title={item.title} info={item.info} date={item.createdAt} name={item.name} file={item.file} />
+            <InfoContent key={item._id} id={item._id} title={item.title} info={item.info} date={item.createdAt} name={item.name} />
             ))}
         </Row>
         </Container> 

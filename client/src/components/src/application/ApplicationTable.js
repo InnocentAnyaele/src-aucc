@@ -49,7 +49,7 @@ const ApplicationTable = () => {
                     items.map(item => (
                         <tr key ={item._id}>
                             {/* <td>{item.file}</td> */}
-                            <td><a className="lightbox" href={require(`../../../assets/application/${item.file}`)}> <img src={require(`../../../assets/application/${item.file}`)} alt="" className="card-img-top"/></a></td>
+                            <td><a className="lightbox" href={item.url}> <img src={item.url} alt="" className="card-img-top"/></a></td>
                             {/* <td><img className="card-img-top" src={require(`../../../assets/application/${item.file}`)} alt="Card"/></td> */}
                             <td>{item.ID}</td>
                             <td>{item.name}</td>

@@ -256,7 +256,7 @@ export default function SideBar() {
                     <ListItemIcon>
                         <ThumbUpIcon/>
                     </ListItemIcon>
-                    <ListItemText primary={"Voter"} />
+                    <ListItemText primary={"Student"} />
                 </ListItem>
             </Link>
             <Link to="/srcMessage" className={classes.link}>

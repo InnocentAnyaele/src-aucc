@@ -4,6 +4,7 @@ import {Button, Col, Card, Row} from 'react-bootstrap'
 import axios from 'axios'
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faDownload} from "@fortawesome/free-solid-svg-icons";
+import {storage} from '../../../firebase/firebase'
 
 const BudgetContent = (props) => {
 
@@ -11,7 +12,12 @@ const BudgetContent = (props) => {
     axios.delete(`/budget/deleteBudget/${props.id}&${props.file}`)
     // axios.delete(`/budget/deleteBudget/${props.id}`)
     .then(()=> { 
+      const deleteRef = storage.ref().child(`budget/${props.file}`)
+      deleteRef.delete().then(function() {
         window.location.reload(false)
+      }).catch(function(error) {
+        alert('Could not delete. Try again later')
+      })
     })
     .catch(()=> {
         alert('Could not delete. Try again later!')
@@ -31,7 +37,7 @@ const BudgetContent = (props) => {
             </div>
             <Row className='mb-2' style={{margin: 'auto auto'}}>
             {/* <Button className='mr-2' variant='primary'>Download</Button> */}
-  <a href={require(`../../../assets/budget/${props.file}`)} download={props.title}> <Button variant='outline-primary' className='mr-2' >  Download </Button> </a>
+  <a href={props.url} download={props.title}> <Button variant='outline-primary' className='mr-2' >  Download </Button> </a>
             <Button variant='outline-danger' onClick={deleteHandler}>Delete</Button>
             </Row>
             </Card>

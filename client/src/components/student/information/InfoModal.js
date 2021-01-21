@@ -47,7 +47,7 @@ class NewsModal extends Component {
               <ModalBody>
               
               <Card>
-                  <img className="modal-img" src={require(`../../../assets/info/${this.props.file}`)} alt="card"/>
+                  <img className="modal-img" src={require(`../../../assets/info/datalink.png`)} alt="card"/>
               </Card>
 
                 <hr/>

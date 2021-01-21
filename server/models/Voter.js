@@ -11,7 +11,7 @@ const Schema = mongoose.Schema
 // })
 
 const voterSchema = new Schema({
-    name: {
+    password: {
         type: String
     },
     id: {

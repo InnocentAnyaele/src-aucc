@@ -45,7 +45,7 @@ Read
               <Card>
                   <img 
                   className="modal-img"
-                   src={require(`../../../assets/news/${this.props.file}`)} 
+                   src={require(`../../../assets/news/datalink.png`)} 
                    alt="card"/>
               </Card>
 

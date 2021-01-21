@@ -4,29 +4,45 @@ const { Z_ASCII } = require('zlib')
 const addBudget = (req, res, next) => {
     const title = req.body.title
     const file = req.files.file
-    const filename = Date.now() + file.name
+    // const filename = Date.now() + file.name
+    const filename = req.body.fileName
+    const url = req.body.url
 
     // console.log(filename)
 
-    file.mv(`${__dirname}../../../client/src/assets/budget/${filename}`, err => {
-        if (err) {
-            console.error(err)
-            return res.status(500).send(err)
-        }
-
-        let budget = new Budget({
-            title: title,
-            file: filename
-        })
-
-        budget.save()
-        .then(()=> {
-            res.json({message: 'Budget added successfully'})
-        })
-        .catch((err) => {
-            res.status(400).send(err)
-        })
+    let budget = new Budget({
+        title: title,
+        file: filename,
+        url: url
     })
+
+    budget.save()
+    .then(()=> {
+        res.json({message: 'Budget added successfully'})
+    })
+    .catch((err) => {
+        res.status(400).send(err)
+    })
+
+    // file.mv(`${__dirname}../../../client/src/assets/budget/${filename}`, err => {
+    //     if (err) {
+    //         console.error(err)
+    //         return res.status(500).send(err)
+    //     }
+
+    //     let budget = new Budget({
+    //         title: title,
+    //         file: filename,
+    //     })
+
+    //     budget.save()
+    //     .then(()=> {
+    //         res.json({message: 'Budget added successfully'})
+    //     })
+    //     .catch((err) => {
+    //         res.status(400).send(err)
+    //     })
+    // })
 }
 
 const getBudget = (req, res, next) => {
@@ -49,11 +65,11 @@ const deleteBudget = (req, res, next) => {
         }
     })
 
-        const fs = require('fs')
-        fs.unlink(`${__dirname}../../../client/src/assets/budget/${req.params.file}`, (err) => {
-            if (err) throw err
-            // console.log('Successful')
-        })
+        // const fs = require('fs')
+        // fs.unlink(`${__dirname}../../../client/src/assets/budget/${req.params.file}`, (err) => {
+        //     if (err) throw err
+        //     // console.log('Successful')
+        // })
 
 }
 

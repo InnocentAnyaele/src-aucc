@@ -51,7 +51,7 @@ const TimeTable = () => {
           </div>
               :
             items.map(item => (
-<TimeTableContent key={item._id} date={item.createdAt} id={item._id} title={item.title} file={item.file} />
+<TimeTableContent key={item._id} date={item.createdAt} id={item._id} title={item.title} url={item.url} file={item.file} />
 ))}  
         </Row>
         </Container>

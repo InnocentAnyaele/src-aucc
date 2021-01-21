@@ -1,32 +1,42 @@
 const Voter = require('../models/Voter')
+const bcrypt = require('bcrypt')
 
 const addVoter = (req, res, next) => {
-    const name = req.body.name
+    const password = req.body.password
     const id = req.body.id
 
-    Voter.findOne({id: id}, function (err, existingVoter){
-        if (existingVoter === null ){
-            let voter = new Voter({
-                name: name,
-                id: id
+    bcrypt.hash(password, 10, function (err, hashedPass){
+        if (err) {
+            res.json({
+                error: err
             })
+        }
+        Voter.findOne({id: id}, function (err, existingVoter){
+            if (existingVoter === null ){
+                let voter = new Voter({
+                    password: hashedPass,
+                    id: id
+                })
+        
+            voter.save()
+            .then(() => {
+                res.status(200).send()
+            })
+            .catch(() => {
+                res.status(500).send()
+            })
+            }
+            else {
+            res.status(404).send()
+            }
     
-        voter.save()
-        .then(() => {
-            res.status(200).send()
+            if(err) {
+                res.status(500).send()
+            }
         })
-        .catch(() => {
-            res.status(500).send()
-        })
-        }
-        else {
-        res.status(404).send()
-        }
-
-        if(err) {
-            res.status(500).send()
-        }
+        
     })
+
 }
 
 const deleteVoter = (req, res, next) => {

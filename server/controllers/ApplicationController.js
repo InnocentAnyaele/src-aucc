@@ -10,18 +10,20 @@ const addApplication = (req, res, next) => {
     const position = req.body.position
     const reference = req.body.reference
     const file = req.body.file
+    const filename = req.body.fileName
+    const url = req.body.url
 
-    if (req.files){
-        const file = req.files.file
-        // console.log(file)
-        var filename = Date.now() + file.name
-        file.mv(`${__dirname}../../../client/src/assets/application/${filename}`,err => {
-            if (err) {
-                console.error(err)
-                return res.status(500).send(err)
-            }
-        })
-    }
+    // if (req.files){
+    //     const file = req.files.file
+    //     // console.log(file)
+    //     var filename = Date.now() + file.name
+    //     file.mv(`${__dirname}../../../client/src/assets/application/${filename}`,err => {
+    //         if (err) {
+    //             console.error(err)
+    //             return res.status(500).send(err)
+    //         }
+    //     })
+    // }
 
     let data = new Application ({
         ID: ID,
@@ -31,7 +33,8 @@ const addApplication = (req, res, next) => {
         department: department,
         position: position,
         reference: reference,
-        file: filename
+        file: filename,
+        url: url
     })
     data.save()
     .then(() => {
@@ -63,11 +66,11 @@ const deleteApplication = (req, res, next) => {
         }
     })
 
-    const fs = require('fs')
-    fs.unlink(`${__dirname}../../../client/src/assets/application/${req.params.file}`, (err) => {
-        if (err) throw err
-        // console.log('Successful')
-    })
+    // const fs = require('fs')
+    // fs.unlink(`${__dirname}../../../client/src/assets/application/${req.params.file}`, (err) => {
+    //     if (err) throw err
+    //     // console.log('Successful')
+    // })
 }
 
 module.exports = {

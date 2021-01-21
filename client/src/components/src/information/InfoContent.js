@@ -8,7 +8,7 @@ import axios from 'axios'
 const InfoContent = (props) => {
 
     const deleteHandler = () => {
-        axios.delete(`/info/deleteInfo/${props.id}&${props.file}`)
+        axios.delete(`/info/deleteInfo/${props.id}`)
         .then(()=> { 
             window.location.reload(false)
         })
@@ -21,7 +21,7 @@ const InfoContent = (props) => {
     return (
 <Col md={6} lg={4}>
     <Card style={{minHeight: "450px", margin:"10px",  boxShadow: '0px 2px 10px rgba(0,0,0,0.15)'}}>
-        <img className="card-img-top" style={{objectFit: "cover", height: "25vh"}} src={require(`../../../assets/info/${props.file}`)} alt="Card"/>
+        <img className="card-img-top" style={{objectFit: "cover", height: "25vh"}} src={require(`../../../assets/info/datalink.png`)} alt="Card"/>
             <div className="card-body">
                 <h5 className="card-title"><b>{props.title.substring(0, 40)}</b></h5>
                 <div className="card-text">
@@ -30,7 +30,7 @@ const InfoContent = (props) => {
                {/* <NewsModal/> */}
             </div>
             <Row  style={{margin: 'auto auto'}}>
-            <InfoModal date={props.date} name={props.name} id={props.id} file={props.file} info={props.info} title={props.title} />
+            <InfoModal date={props.date} name={props.name} id={props.id} info={props.info} title={props.title} />
             <Button variant='outline-danger' onClick={deleteHandler} className='mb-2'>Delete</Button>
 </Row>
             </Card>

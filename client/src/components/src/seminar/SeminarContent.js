@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload} from "@fortawesome/free-solid-svg-icons";
 import DeleteIcon from '@material-ui/icons/Delete'
 import axios from 'axios'
+import {storage} from '../../../firebase/firebase'
 
 
 const SeminarContent = (props) => {
@@ -12,7 +13,12 @@ const SeminarContent = (props) => {
     const deleteHandler = () => {
         axios.delete(`/seminar/deleteSeminar/${props.id}&${props.file}`)
         .then(()=> { 
-            window.location.reload(false)
+            const deleteRef = storage.ref().child(`seminar/${props.file}`)
+            deleteRef.delete().then(function() {
+                window.location.reload(false)
+            }).catch(function(error) {
+                alert('Could not delete. Try again later!')
+            })
         })
         .catch(()=> {
             alert('Could not delete. Try again later!')
@@ -24,7 +30,7 @@ const SeminarContent = (props) => {
         <Card key={props.id} className='border-0 transform-on-hover' style={{transition: '0.4s ease', boxShadow: '0px 2px 10px rgba(0,0,0,0.15)', marginBottom: '30px'}}>
         <div>
             <video controls preload='none' style={{objectFit: 'cover', height: '30vh', width: '100%'}}>
-                <source src={require(`../../../assets/seminar/${props.file}`)}></source>
+                <source src={props.url}></source>
             </video>
         </div>
   <Card.Body style={{textAlign: 'center'}}>
@@ -33,7 +39,7 @@ const SeminarContent = (props) => {
   {/* <Card.Footer> */}
   <Row style={{margin: 'auto auto'}}>
   {/* <Button variant='primary' className='mr-2' onClick={downloadHandler}><FontAwesomeIcon icon={faDownload} /> Download</Button> */}
-  <a href={require(`../../../assets/seminar/${props.file}`)} download={props.title}> <Button variant='primary' className='m-2' > <FontAwesomeIcon icon={faDownload} />  </Button> </a>
+  <a href={props.url} download={props.title}> <Button variant='primary' className='m-2' > <FontAwesomeIcon icon={faDownload} />  </Button> </a>
       <Button variant='danger' onClick={deleteHandler} className='m-2' ><DeleteIcon/> </Button>
 </Row>
   {/* </Card.Footer> */}

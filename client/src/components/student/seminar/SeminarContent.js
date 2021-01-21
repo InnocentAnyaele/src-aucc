@@ -12,7 +12,7 @@ const SeminarContent = (props) => {
         <Card className='border-0 transform-on-hover' style={{transition: '0.4s ease', boxShadow: '0px 2px 10px rgba(0,0,0,0.15)', marginBottom: '30px'}}>
         <div>
             <video controls preload='none' style={{objectFit: 'cover', height: '30vh', width: '100%'}}>
-                <source src={require(`../../../assets/seminar/${props.file}`)}></source>
+                <source src={props.url}></source>
             </video>
         </div>
   <Card.Body style={{textAlign: 'center'}}>

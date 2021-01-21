@@ -1,17 +1,17 @@
 import React from 'react'
-import '../src.css'
+import '../student.css'
 import {Container} from 'react-bootstrap'
-import SrcPasswordForm from './SrcPasswordForm'
+import StudentPasswordForm from './StudentPasswordForm'
 // import StudentPasswordForm from './StudentPasswordForm'
 
-const Welcome = () => {
+const Password = () => {
     return(
         <div className="wrapper">
         <Container>
-        <h1 style={{fontSize: '60px'}} className='text-muted'>Reset SRC password</h1>
+        <h1 style={{fontSize: '60px'}} className='text-muted'>Reset Student Password</h1>
         <hr/>
 
-      <SrcPasswordForm/>
+      <StudentPasswordForm/>
       {/* <StudentPasswordForm/> */}
         </Container> 
         </div>
@@ -19,4 +19,4 @@ const Welcome = () => {
      )
 }
 
-export default Welcome
+export default Password

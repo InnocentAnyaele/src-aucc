@@ -7,6 +7,10 @@ const budgetSchema = new Schema({
     },
     file: {
         type: String
+    },
+    url : {
+        type: String,
+        required: true
     }
 }, {timestamps: true})
 

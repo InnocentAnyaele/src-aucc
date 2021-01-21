@@ -12,7 +12,7 @@ const TimeTableContent = (props) => {
                 <p>{props.title.substring(0,80)}</p>
                 </div>
             </div>
-            <a href={require(`../../../assets/timetable/${props.file}`)} download={props.title}> <Button variant='outline-primary' className='mb-2' >  Download </Button> </a>
+            <a href={props.url} download={props.title}> <Button variant='outline-primary' className='mb-2' >  Download </Button> </a>
             </Card>
             </Col>
   )

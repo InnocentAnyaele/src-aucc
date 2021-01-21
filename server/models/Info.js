@@ -8,9 +8,9 @@ const infoSchema = new Schema({
     name: {
         type: String
     },
-    file: {
-        type: String
-    },
+    // file: {
+    //     type: String
+    // },
     info: {
         type: String
     }

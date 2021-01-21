@@ -8,6 +8,7 @@ import {Form, Button, ProgressBar} from 'react-bootstrap'
 import { Modal, ModalBody, ModalHeader, ModalFooter} from 'reactstrap'
 import AddIcon from '@material-ui/icons/Add'
 import axios from 'axios'
+import {storage} from '../../../firebase/firebase'
 
 // Modal.setAppElement('#root')
 
@@ -27,7 +28,8 @@ class ECommerceAdd extends Component {
        type: 'product',
        fileName: 'Choose FIle',
        message: '',
-       uploadPercentage: '0'
+       uploadPercentage: '0',
+       progress: ''
     }
   }
 
@@ -37,13 +39,13 @@ class ECommerceAdd extends Component {
 
   changeFileHandler = e => {
     this.setState({file: e.target.files[0]})
-    this.setState({fileName: e.target.files[0].name})
+    this.setState({fileName: Date.now() + e.target.files[0].name})
    }
     
    submitHandler = async e => {
     e.preventDefault()
     // console.log(this.state.type)
-    const formData = new FormData()
+    let formData = new FormData()
     formData.append('title', this.state.title)
     formData.append('file', this.state.file)
     formData.append('price', this.state.price)
@@ -53,34 +55,48 @@ class ECommerceAdd extends Component {
     formData.append('info', this.state.info)
     formData.append('phone', this.state.phone)
     formData.append('type', this.state.type)
+    formData.append('fileName', this.state.fileName)
   
     const insert = async () => {
-      try {
-        const res = await axios.post('/ecommerce/addEcommerce', formData, {
-          headers : {
-            'Content-Type' : 'multipart/form-data'
-          },
-          onUploadProgress: progressEvent => {
-            this.setState({uploadPercentage: (parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total)))})
+      const uploadTask = storage.ref(`/eCommerce/${this.state.fileName}`).put(this.state.file)
+      uploadTask.on('state_changed',
+      (snapshot) => {
+        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+        this.setState({progress: progress})
+      },
+      (error) => {
+        console.log(error)
+      },
+      async (complete) => {
+        try {
+          const url = await storage.ref('eCommerce').child(this.state.fileName).getDownloadURL()
+          formData.append('url', url)
+          const res = await axios.post('/ecommerce/addEcommerce', formData, {
+            headers : {
+              'Content-Type' : 'multipart/form-data'
+            },
+            onUploadProgress: progressEvent => {
+              this.setState({uploadPercentage: (parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total)))})
+            }
+          } )
+          if(this.state.uploadPercentage === 100){
+            this.setState({message: 'Product Added!'})
           }
-        } )
-        if(this.state.uploadPercentage === 100){
-          this.setState({message: 'Product Added!'})
-        }
-        console.log(this.state.uploadPercentage)
-        console.log(res.data)
-      } catch (err) {
-        if(err.response.status === 500) {
-          this.setState({message: 'There was a problem with the server!'})
-          // console.log(err)
-        } else if (err.response.status === 400){
-          this.setState({message: 'Could not upload, try again later'})
-        } 
-        else {
-          this.setState({message: err.response.data.msg})
-          // console.log(err.response.data.msg)
-        }
-      }  
+          console.log(this.state.uploadPercentage)
+          console.log(res.data)
+        } catch (err) {
+          if(err.response.status === 500) {
+            this.setState({message: 'There was a problem with the server!'})
+            // console.log(err)
+          } else if (err.response.status === 400){
+            this.setState({message: 'Could not upload, try again later'})
+          } 
+          else {
+            this.setState({message: err.response.data.msg})
+            // console.log(err.response.data.msg)
+          }
+        }  
+      })
     }
 
     if (this.state.file.length < 1) {
@@ -163,7 +179,7 @@ class ECommerceAdd extends Component {
 </Form.Group>
 
 <Form.Group>
-<Form.File id="exampleFormControlFile1" type='file' onChange={this.changeFileHandler} accept="image/*"/>
+<Form.File id="exampleFormControlFile1" type='file' onChange={this.changeFileHandler} accept="image/*" required/>
   </Form.Group>
 
   {/* <Form.Group id="formGridCheckbox">
@@ -180,7 +196,7 @@ class ECommerceAdd extends Component {
 
   <p style={{color: 'red'}}><i>{this.state.message}</i></p>
 <div className='mb-3'>
-<ProgressBar striped variant="success" now={this.state.uploadPercentage} label={`${this.state.uploadPercentage}%`} />
+<ProgressBar striped variant="success" now={this.state.progress} label={`${this.state.progress}%`} />
 </div>
   <Button variant='primary' type='submit'>Add</Button>
 

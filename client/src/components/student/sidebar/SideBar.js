@@ -81,6 +81,7 @@ import PollIcon from '@material-ui/icons/Poll'
 import ContactMailIcon from '@material-ui/icons/ContactMail'
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import PersonIcon from '@material-ui/icons/Person';
+import LockIcon from '@material-ui/icons/Lock'
 
 
 
@@ -312,6 +313,14 @@ export default function SideBar() {
                 <ListItem button>
                   <ListItemIcon>
                     <PersonIcon/>
+                  </ListItemIcon>
+                    <ListItemText primary={"Application"} />
+                </ListItem>
+              </Link>
+              <Link to="/studentPassword" className={classes.link}>
+                <ListItem button>
+                  <ListItemIcon>
+                    <LockIcon/>
                   </ListItemIcon>
                     <ListItemText primary={"Application"} />
                 </ListItem>
