@@ -1,17 +1,8 @@
-import React, { Component } from 'react'
-// import image from '../../../assets/img/img1.jpg'
+import React, {Component} from 'react'
 import {Card} from 'react-bootstrap'
-// import Modal from 'react-modal'
-// import ModalHeader from 'react-bootstrap/ModalHeader';
-// import ModalBody from 'react-bootstrap/ModalBody';
-// import ModalFooter from 'react-bootstrap/ModalFooter';
-// import ModalTitle from 'react-bootstrap/ModalTitle'
-import { Modal, ModalBody, ModalHeader, ModalFooter} from 'reactstrap'
+import {Modal, ModalBody, ModalHeader, ModalFooter} from 'reactstrap'
 
-// Modal.setAppElement('#root')
-
-class NewsModal extends Component {
-
+class HallModal extends Component {
     state = {
         isOpen: false
       };
@@ -28,11 +19,10 @@ class NewsModal extends Component {
         });
       };
     
-
-    render() {
-        return (
-            <div>
- <button className='btn btn-outline-primary mr-2 mb-2'  onClick={this.openModal}>
+      render () {
+          return (
+              <div>
+                  <button className='btn btn-outline-primary mr-2 mb-2'  onClick={this.openModal}>
 Read
          </button>
 
@@ -45,13 +35,13 @@ Read
               <Card>
                   <img 
                   className="modal-img"
-                   src={require(`../../../assets/news/aucc_logo.jpg`)} 
+                   src={this.props.url} 
                    alt="card"/>
               </Card>
 
                 <hr/>
-                <p className='text-center'><a href={this.props.link}>{this.props.link}</a> </p>
-                <p>{this.props.news}</p>
+                {/* <p className='text-center'><a href={this.props.link}>{this.props.link}</a> </p> */}
+                <p>{this.props.info}</p>
                 <p className='text-center'><b>{this.props.name}</b></p>
                 <p className='text-center text-muted'>{this.props.date}</p>
 
@@ -62,14 +52,9 @@ Read
                 </button>
               </ModalFooter>
             </Modal>
-            </div>
-
-    
-        )
-       
-    }
-
+              </div>
+          )
+      }
 }
 
-export default NewsModal
-
+export default HallModal

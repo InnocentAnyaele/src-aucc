@@ -22,6 +22,7 @@ const VoterRoute = require('./server/routes/voter')
 const MessageRoute = require('./server/routes/message')
 const PollRoute = require('./server/routes/poll')
 const ApplicationRoute = require('./server/routes/application')
+const HallRoute = require('./server/routes/hall')
 
 
 require ('dotenv').config()
@@ -57,7 +58,7 @@ app.use('/voter', VoterRoute)
 app.use('/message', MessageRoute)
 app.use('/poll', PollRoute)
 app.use('/application', ApplicationRoute)
-
+app.use('/hall', HallRoute)
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'))

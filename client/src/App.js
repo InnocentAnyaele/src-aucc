@@ -18,6 +18,7 @@ import StudentPoll from './components/student/poll/Poll'
 import StudentMessage from './components/student/message/Message'
 import StudentApplication from './components/student/application/Application'
 import StudentPassword from './components/student/password/Password'
+import StudentHall from './components/student/hall/Hall'
 
 import SrcSideNav from './components/src/sidebar/SideBar'
 import SrcGallery from './components/src/gallery/Gallery'
@@ -34,6 +35,7 @@ import SrcMessage from './components/src/message/Message'
 import SrcVoter from './components/src/voter/Voter'
 import SrcPassword from './components/src/password/Password'
 import SrcApplication from './components/src/application/Application'
+import SrcHalls from './components/src/hall/Hall'
 
 
 const studentRoutes = [
@@ -101,6 +103,11 @@ const studentRoutes = [
     path: '/studentPassword',
     sidebar: () => <StudentSideNav/>,
     main: () => <StudentPassword/>
+  },
+  {
+    path: '/studentHalls',
+    sidebar: () => <StudentSideNav/>,
+    main: () => <StudentHall/>
   }
 ]
 
@@ -174,6 +181,11 @@ const srcRoutes = [
     path: '/srcApplication',
     sidebar: () => <SrcSideNav/>,
     main: () => <SrcApplication/>
+  },
+  {
+    path: '/srcHalls',
+    sidebar: () => <SrcSideNav/>,
+    main: () => <SrcHalls/>
   }
 ]
 

@@ -3,7 +3,7 @@ import '../student.css'
 import { Container, Row, Spinner, Button } from 'react-bootstrap'
 // import ECommerceSearch from './ECommerceSearch'
 import ECommerceContent from './ECommerceContent'
-import ECommerceAdd from './ECommerceAdd'
+// import ECommerceAdd from './ECommerceAdd'
 import axios from 'axios'
 import Search from '../../src/Search'
 
@@ -70,7 +70,7 @@ const ECommerce = () => {
         <Container>
         <Row>
         <h1 style={{fontSize: '60px'}} className='text-muted'>E-Commerce</h1>
-        <ECommerceAdd/>
+        {/* <ECommerceAdd/> */}
         </Row>
     <hr/>
        <Search query={query} onChange={handleQueryRequest} />

@@ -7,7 +7,7 @@ import {Form, Button} from 'react-bootstrap'
 // import ModalTitle from 'react-bootstrap/ModalTitle'
 import { Modal, ModalBody, ModalHeader, ModalFooter} from 'reactstrap'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-import axios from 'axios'
+// import axios from 'axios'
 // Modal.setAppElement('#root')
 
 class ECommerceBuyModal extends Component {
@@ -33,22 +33,23 @@ class ECommerceBuyModal extends Component {
   submitHandler = async (e) => {
     e.preventDefault()
     this.setState({product: this.props.title})
-    console.log(this.state.name, this.state.info, this.state.phone, this.state.email, this.state.product)
-    try {
-      const res = await axios.post('/ecommerce/purchaseEcommerce', {name: this.state.name, email: this.state.email, phone: this.state.phone, info: this.state.info, product: this.state.product} )
-     if(res.status === 200){
-       this.setState({message: 'Email sent!'})
-     }
-    } catch (err) {
-      if(err.response.status === 500) {
-        this.setState({message: 'There was a problem with the server!'})
-        // console.log(err)
-      }
-      else {
-        this.setState({message: err.response.data.msg})
-        // console.log(err.response.data.msg)
-      }
-    }
+    alert('Please use contact from the purchase information to get in touch with buyer')
+    // console.log(this.state.name, this.state.info, this.state.phone, this.state.email, this.state.product)
+    // try {
+    //   const res = await axios.post('/ecommerce/purchaseEcommerce', {name: this.state.name, email: this.state.email, phone: this.state.phone, info: this.state.info, product: this.state.product} )
+    //  if(res.status === 200){
+    //    this.setState({message: 'Email sent!'})
+    //  }
+    // } catch (err) {
+    //   if(err.response.status === 500) {
+    //     this.setState({message: 'There was a problem with the server!'})
+    //     // console.log(err)
+    //   }
+    //   else {
+    //     this.setState({message: err.response.data.msg})
+    //     // console.log(err.response.data.msg)
+    //   }
+    // }
   }
 
     state = {

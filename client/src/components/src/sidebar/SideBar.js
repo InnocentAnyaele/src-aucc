@@ -31,7 +31,8 @@ import ContactMailIcon from '@material-ui/icons/ContactMail'
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import LockIcon from '@material-ui/icons/Lock';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
-import PersonIcon from '@material-ui/icons/Person'
+// import PersonIcon from '@material-ui/icons/Person'
+import GroupIcon from '@material-ui/icons/Group';
 
 
 const drawerWidth = 240;
@@ -132,6 +133,8 @@ export default function SideBar() {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
+
+        style={{backgroundColor: '#FF4500'}}
       >
         <Toolbar>
           <IconButton
@@ -201,6 +204,14 @@ export default function SideBar() {
                         <NewsIcon/>
                     </ListItemIcon>
                     <ListItemText primary={"News and Events"} />
+                </ListItem>
+            </Link>
+            <Link to="/srcHalls" className={classes.link}>
+            <ListItem button>
+                    <ListItemIcon>
+                        <GroupIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary={"Halls and Clubs"} />
                 </ListItem>
             </Link>
             <Link to="/srcInfo" className={classes.link}>
@@ -275,14 +286,14 @@ export default function SideBar() {
                     <ListItemText primary={"Password"} />
                 </ListItem>
             </Link>
-            <Link to="/srcApplication" className={classes.link}>
+            {/* <Link to="/srcApplication" className={classes.link}>
             <ListItem button>
                     <ListItemIcon>
                         <PersonIcon/>
                     </ListItemIcon>
                     <ListItemText primary={"Application"} />
                 </ListItem>
-            </Link>
+            </Link> */}
           </List>
           <Divider />
           <List>

@@ -1,31 +1,26 @@
 import React, {useState, useEffect} from 'react'
-import '../src.css'
+import '../student.css'
+import HallContent from './HallContent'
 import {Container, Row, Spinner} from 'react-bootstrap'
-import InfoContent from './InfoContent'
-// import InfoSearch from '../../student/information/InfoSearch'
-import InfoAdd from './InfoAdd'
 import axios from 'axios'
-import Search from '../Search'
+import Search from '../../src/Search'
 
-// Modal.setAppElement('#root')
-
-
-const Info = () => {
+const Hall = () => {
 
     const [items, setItems] = useState([])
     const [loading, setLoading] = useState(true)
     const [query, setQuery] = useState(null)
 
-    useEffect(()=> {
+    useEffect(() => {
         if(query !== null){
-            axios.get(`/info/searchInfo/${query}`)
+            axios.get(`/hall/searchHall/${query}`)
             .then((res)=>{
                 setItems(res.data)
                 setLoading(false)
             })
         } else {
             axios
-            .get('/info/getInfo')
+            .get('/hall/getHall')
             .then((res)=> {
                 setItems(res.data)
                 setLoading(false)
@@ -35,20 +30,16 @@ const Info = () => {
                 alert('Error retrieving data')
             })
         }   
-    },[query])
+    }, [query])
 
     function handleQueryRequest(data) {
         setQuery(data)
-        console.log(query)
     }
 
     return (
         <div className='wrapper'> 
             <Container>
-            <Row>
-            <h1 style={{fontSize: '60px'}} className='text-muted'>Information</h1>
-<InfoAdd/>
-            </Row>
+        <h1 style={{fontSize: '60px'}} className='text-muted'>Hall and Clubs</h1>
         <hr/>
         <Search query={query} onChange={handleQueryRequest} />
         <Row style={{overflow: "auto", height: "600px"}} className='text-center' > 
@@ -58,12 +49,13 @@ const Info = () => {
           </div>
               :
             items.map(item => (
-            <InfoContent key={item._id} id={item._id} title={item.title} info={item.info} date={item.createdAt} name={item.name} />
-            ))}
+                <HallContent key={item._id} id={item._id} date={item.createdAt} url={item.url} info={item.info} name={item.name} title={item.title} file={item.file} />
+            ))
+            }
         </Row>
         </Container> 
         </div>
     )
 }
 
-export default Info
+export default Hall

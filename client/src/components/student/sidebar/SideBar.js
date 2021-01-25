@@ -80,8 +80,9 @@ import ShopIcon from '@material-ui/icons/AddShoppingCart'
 import PollIcon from '@material-ui/icons/Poll'
 import ContactMailIcon from '@material-ui/icons/ContactMail'
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
-import PersonIcon from '@material-ui/icons/Person';
+// import PersonIcon from '@material-ui/icons/Person';
 import LockIcon from '@material-ui/icons/Lock'
+import GroupIcon from '@material-ui/icons/Group'
 
 
 
@@ -182,6 +183,9 @@ export default function SideBar() {
           className={clsx(classes.appBar, {
             [classes.appBarShift]: open,
           })}
+
+        style={{backgroundColor: '#FF4500'}}
+
         >
           <Toolbar>
             <IconButton
@@ -253,6 +257,14 @@ export default function SideBar() {
                       <ListItemText primary={"News and Events"} />
                   </ListItem>
               </Link>
+              <Link to="/studentHalls" className={classes.link}>
+            <ListItem button>
+                    <ListItemIcon>
+                        <GroupIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary={"Halls and Clubs"} />
+                </ListItem>
+            </Link>
               <Link to="/studentInfo" className={classes.link}>
               <ListItem button>
                       <ListItemIcon>
@@ -309,20 +321,20 @@ export default function SideBar() {
                       <ListItemText primary={"Message"} />
                   </ListItem>
               </Link>
-              <Link to="/studentApplication" className={classes.link}>
+              {/* <Link to="/studentApplication" className={classes.link}>
                 <ListItem button>
                   <ListItemIcon>
                     <PersonIcon/>
                   </ListItemIcon>
                     <ListItemText primary={"Application"} />
                 </ListItem>
-              </Link>
+              </Link> */}
               <Link to="/studentPassword" className={classes.link}>
                 <ListItem button>
                   <ListItemIcon>
                     <LockIcon/>
                   </ListItemIcon>
-                    <ListItemText primary={"Application"} />
+                    <ListItemText primary={"Password"} />
                 </ListItem>
               </Link>
             </List>
