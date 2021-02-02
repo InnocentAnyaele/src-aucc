@@ -30,8 +30,14 @@ const Welcome = () => {
 
          : 
          <div className='ml-5'>
-         <p style={{fontSize: '30px'}}> {messageData.message} </p>
-         <p className='text-muted' style={{fontSize: '12px'}} > {messageData.date} </p>
+         <article class="message is-warning">
+            <div class="message-body">
+            <p style={{fontSize: '15px'}}>{messageData.message}</p>
+            <p className='text-muted' style={{fontSize: '12px'}}>{messageData.date}</p>
+            </div>
+        </article>
+         {/* <p style={{fontSize: '30px'}}> {messageData.message} </p>
+         <p className='text-muted' style={{fontSize: '12px'}} > {messageData.date} </p> */}
          </div>
         }
        </Container> 
